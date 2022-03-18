@@ -1,8 +1,6 @@
 # safetypes
 Rust like result and option implementation for golang
-
-### Installing
-```go
+```
 go get github.com/eminarican/safetypes@0.0.1
 ```
 
