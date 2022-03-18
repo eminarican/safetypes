@@ -17,7 +17,7 @@ func TestOption(t *testing.T) {
 }
 
 func option_test_some() (opt Option[int]) {
-	return opt.Some(3)
+	return opt.Some(7)
 }
 
 func option_test_none() (opt Option[int]) {

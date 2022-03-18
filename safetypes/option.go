@@ -4,6 +4,18 @@ type Option[T any] struct {
 	value *T
 }
 
+func Some[T any](value T) Option[T] {
+	return Option[T]{
+		value: &value,
+	}
+}
+
+func None[T any]() Option[T] {
+	return Option[T]{
+		value: nil,
+	}
+}
+
 func (o Option[T]) Some(value T) Option[T] {
 	o.value = &value
 	return o
