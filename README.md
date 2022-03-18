@@ -38,3 +38,6 @@ func test(ok bool) (res safetypes.Result[int]) {
     return res.Err("some fancy error msg")
 }
 ```
+
+### Note
+Error and None methods usable as structless but it doesn't infere types so instead of using `safetypes.None[T]()` and `safetypes.Err[T]("")` you could use them as how in examples above
