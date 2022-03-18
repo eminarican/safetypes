@@ -1,3 +1,3 @@
-module github.com/eminarican/safetypes
+module github.com/eminarican
 
 go 1.18
