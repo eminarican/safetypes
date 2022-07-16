@@ -1,7 +1,7 @@
 package safetypes
 
 type Option[T any] struct {
-	Value *T `json:"value,omitempty" bson:"value,omitempty"`
+	Value *T `json:"value,omitempty" bson:"value,omitempty" rethinkdb:"value,omitempty"`
 }
 
 func Some[T any](value T) Option[T] {
