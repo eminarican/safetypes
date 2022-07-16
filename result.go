@@ -29,8 +29,20 @@ func IsErr(err error) bool {
 	return err != nil
 }
 
-func AsResult[T any](value T, err error) Result[T] {
+func IsOkThen(err error, fun func()) {
 	if IsOk(err) {
+		fun()
+	}
+}
+
+func IsErrThen(err error, fun func()) {
+	if IsErr(err) {
+		fun()
+	}
+}
+
+func AsResult[T any](value T, err error) Result[T] {
+	if err != nil {
 		return Err[T](err.Error())
 	}
 	return Ok(value)
@@ -49,11 +61,11 @@ func (r Result[T]) Err(err string) Result[T] {
 }
 
 func (r *Result[T]) IsOk() bool {
-	return IsOk(r.err)
+	return r.err == nil
 }
 
 func (r *Result[T]) IsErr() bool {
-	return IsErr(r.err)
+	return r.err != nil
 }
 
 func (r *Result[T]) Error() error {
