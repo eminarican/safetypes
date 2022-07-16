@@ -1,5 +1,7 @@
 # safetypes
 Rust like result and option implementation for golang
+
+just a reminder, option type is ready for (un)marshalling, mongodb and rethinkdb so feel free to use it with ^^
 ```
 go get github.com/eminarican/safetypes@0.0.1
 ```
