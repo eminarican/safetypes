@@ -21,6 +21,13 @@ func Err[T any](err string) Result[T] {
 	}
 }
 
+func AsResult[T any](value T, err error) Result[T] {
+	if err != nil {
+		return Err[T](err.Error())
+	}
+	return Ok(value)
+}
+
 func (r Result[T]) Ok(value T) Result[T] {
 	r.value = &value
 	r.err = nil
