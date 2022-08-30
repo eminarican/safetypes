@@ -7,6 +7,8 @@ just a reminder, option type is ready for (un)marshalling, mongodb and rethinkdb
 
 ### Option
 ```go
+import safe "github.com/eminarican/safetypes"
+
 func main() {
     opt := test(true)
 
@@ -21,7 +23,37 @@ func main() {
     println(opt.UnwrapOr(10))
 }
 
-func test(some bool) (opt safetypes.Option[int]) {
+func test(some bool) (opt safe.Option[int]) {
+    if some {
+        return opt.Some(7)
+    }
+    return opt.None()
+}
+```
+
+#### Json
+```go
+import safe "github.com/eminarican/safetypes"
+
+type Test struct {
+    Field safe.Option[int]
+}
+
+func main() {
+    s := Test{
+		Field: test(true),
+	}
+	res := safe.AsResult(json.Marshal(s))
+    if res.IsOk() {
+        // if some: "Test{Field: 7}"
+        // if none: "Test{Field: {}}"
+        println(res.Unwrap())
+    } else {
+        panic(res.Error())
+    }
+}
+
+func test(some bool) (opt safe.Option[int]) {
     if some {
         return opt.Some(7)
     }
@@ -31,6 +63,8 @@ func test(some bool) (opt safetypes.Option[int]) {
 
 ### Result
 ```go
+import safe "github.com/eminarican/safetypes"
+
 func main() {
     res := test(true)
 
@@ -41,7 +75,7 @@ func main() {
     }
 }
 
-func test(ok bool) (res safetypes.Result[int]) {
+func test(ok bool) (res safe.Result[int]) {
     if ok {
         return res.Ok(7)
     }

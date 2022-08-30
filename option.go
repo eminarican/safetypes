@@ -1,5 +1,10 @@
 package safetypes
 
+import (
+	"encoding/json"
+	"strings"
+)
+
 type Option[T any] struct {
 	Value *T `json:"value,omitempty" bson:"value,omitempty" rethinkdb:"value,omitempty"`
 }
@@ -46,4 +51,24 @@ func (o *Option[T]) UnwrapOr(or T) T {
 		return or
 	}
 	return *o.Value
+}
+
+func (o Option[T]) MarshalJSON() ([]byte, error) {
+	if o.IsSome() {
+		return json.Marshal(o.Value)
+	}
+	return []byte("{}"), nil
+}
+
+func (o *Option[T]) UnmarshalJSON(data []byte) error {
+	var result T
+	if err := json.Unmarshal(data, &result); err != nil {
+		if strings.HasPrefix(string(data), "{}") {
+			o.Value = nil
+			return nil
+		}
+		return err
+	}
+	o.Value = &result
+	return nil
 }

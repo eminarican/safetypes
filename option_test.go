@@ -1,6 +1,8 @@
 package safetypes
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestOption(t *testing.T) {
 	if res := option_test_some(); res.IsSome() {
