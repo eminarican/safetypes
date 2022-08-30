@@ -9,21 +9,19 @@ just a reminder, option type is ready for (un)marshalling, mongodb and rethinkdb
 ```go
 import safe "github.com/eminarican/safetypes"
 
-func main() {
-    opt := test(true)
-
-    // "check and unwrap" approach
+func checkUnwrap(opt safe.Option[int]) {
     if opt.IsSome() {
         println(opt.Unwrap())
     } else {
         panic("poor option :(")
     }
+}
 
-    // "unwrap or" approach
+func checkUnwrapOr(opt safe.Option[int]) {
     println(opt.UnwrapOr(10))
 }
 
-func test(some bool) (opt safe.Option[int]) {
+func retrunOption(some bool) (opt safe.Option[int]) {
     if some {
         return opt.Some(7)
     }
@@ -39,10 +37,7 @@ type Test struct {
     Field safe.Option[int]
 }
 
-func main() {
-    s := Test{
-	    Field: test(true),
-    }
+func jsonMarshal(t Test) {
     res := safe.AsResult(json.Marshal(s))
     if res.IsOk() {
         // if some: "Test{Field: 7}"
@@ -52,22 +47,13 @@ func main() {
         panic(res.Error())
     }
 }
-
-func test(some bool) (opt safe.Option[int]) {
-    if some {
-        return opt.Some(7)
-    }
-    return opt.None()
-}
 ```
 
 ### Result
 ```go
 import safe "github.com/eminarican/safetypes"
 
-func main() {
-    res := test(true)
-
+func checkUnwrap(res safe.Result[int]) {
     if res.IsOk() {
         println(res.Unwrap())
     } else {
@@ -75,8 +61,8 @@ func main() {
     }
 }
 
-func test(ok bool) (res safe.Result[int]) {
-    if ok {
+func retrunResult(some bool) (res safe.Result[int]) {
+    if some {
         return res.Ok(7)
     }
     return res.Err("some fancy error msg")
