@@ -5,10 +5,12 @@ just a reminder, option type is ready for (un)marshalling, mongodb and rethinkdb
 
 ## Examples
 
-### Option
 ```go
 import safe "github.com/eminarican/safetypes"
+```
 
+### Option
+```go
 func checkUnwrap(opt safe.Option[int]) {
     if opt.IsSome() {
         println(opt.Unwrap())
@@ -16,11 +18,13 @@ func checkUnwrap(opt safe.Option[int]) {
         panic("poor option :(")
     }
 }
-
+```
+```go
 func checkUnwrapOr(opt safe.Option[int]) {
     println(opt.UnwrapOr(10))
 }
-
+```
+```go
 func retrunOption(some bool) (opt safe.Option[int]) {
     if some {
         return opt.Some(7)
@@ -28,11 +32,7 @@ func retrunOption(some bool) (opt safe.Option[int]) {
     return opt.None()
 }
 ```
-
-#### Json
 ```go
-import safe "github.com/eminarican/safetypes"
-
 type Test struct {
     Field safe.Option[int]
 }
@@ -51,8 +51,6 @@ func jsonMarshal(t Test) {
 
 ### Result
 ```go
-import safe "github.com/eminarican/safetypes"
-
 func checkUnwrap(res safe.Result[int]) {
     if res.IsOk() {
         println(res.Unwrap())
@@ -60,7 +58,8 @@ func checkUnwrap(res safe.Result[int]) {
         panic(res.Error())
     }
 }
-
+```
+```go
 func retrunResult(some bool) (res safe.Result[int]) {
     if some {
         return res.Ok(7)
