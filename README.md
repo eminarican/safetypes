@@ -42,7 +42,7 @@ type Test struct {
 func main() {
     s := Test{
 	    Field: test(true),
-	}
+    }
     res := safe.AsResult(json.Marshal(s))
     if res.IsOk() {
         // if some: "Test{Field: 7}"
