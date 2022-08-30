@@ -8,11 +8,17 @@ just a reminder, option type is ready for (un)marshalling, mongodb and rethinkdb
 ### Option
 ```go
 func main() {
-    if opt := test(true); opt.IsSome() {
+    opt := test(true)
+
+    // "check and unwrap" approach
+    if opt.IsSome() {
         println(opt.Unwrap())
     } else {
-        println("poor option :(")
+        panic("poor option :(")
     }
+
+    // "unwrap or" approach
+    println(opt.UnwrapOr(10))
 }
 
 func test(some bool) (opt safetypes.Option[int]) {
@@ -26,7 +32,9 @@ func test(some bool) (opt safetypes.Option[int]) {
 ### Result
 ```go
 func main() {
-    if res := test(true); res.IsOk() {
+    res := test(true)
+
+    if res.IsOk() {
         println(res.Unwrap())
     } else {
         panic(res.Error())

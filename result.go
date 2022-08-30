@@ -21,26 +21,6 @@ func Err[T any](err string) Result[T] {
 	}
 }
 
-func IsOk(err error) bool {
-	return err == nil
-}
-
-func IsErr(err error) bool {
-	return err != nil
-}
-
-func IsOkThen(err error, fun func()) {
-	if IsOk(err) {
-		fun()
-	}
-}
-
-func IsErrThen(err error, fun func()) {
-	if IsErr(err) {
-		fun()
-	}
-}
-
 func AsResult[T any](value T, err error) Result[T] {
 	if err != nil {
 		return Err[T](err.Error())

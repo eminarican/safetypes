@@ -40,3 +40,10 @@ func (o *Option[T]) Unwrap() T {
 	}
 	return *o.Value
 }
+
+func (o *Option[T]) UnwrapOr(or T) T {
+	if o.IsNone() {
+		return or
+	}
+	return *o.Value
+}
